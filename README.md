@@ -6,6 +6,21 @@ This input guide is a companion of MATLAB program **AEPH** from *Anisotropic ela
 
 > Parameters enclosed by brackets `[ ]` are optional.
 
+## Table of Contents
+- [input_control.txt](#input_controltxt)
+- [input_elastic.txt](#input_elastic1txt)
+- [input_loadstr.txt](#input_loadstrtxt)
+  - [Ltype=4](#ltype4-bem-for-elliptical-hole)
+  - [Ltype=9](#ltype9-bem-for-polygonal-hole)
+  - [Ltype=411](#ltype411-uniform-load)
+  - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
+  - [Ltype=614](#ltype614-point-load-elliptical-hole)
+  - [Ltype=622](#ltype622-uniform-load-polygon-like-hole)
+- [input_variable.txt](#input_variabletxt)
+- [input_xn.txt](#input_xntxt)
+- [input_node1.txt](#input_node1txt)
+- [input_bc.txt](#input_bctxt)
+
 ## input_control.txt
 
 ### Format
