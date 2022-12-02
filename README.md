@@ -1,6 +1,6 @@
 # AEPH Input Guide
 
-This input guide is a companion of "*Anisotropic elasticity with Matlab*", **Chyanbin Hwu**, Springer, 2021. Additional information can be found in Sec. 3.1.4 and App. E in the book.
+This input guide is a companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021. Additional information can be found in Sec. 3.1.4 and App. E in the book.
 
 > All the labels used in AEPH are **numbers**, i.e. all data in the input files must be numeric.
 
@@ -31,116 +31,109 @@ E.g.
 
 ### Parameters
 
-- **Nmat** 
-  Total number of materials.
+#### Nmat
+Total number of materials.
   
-- **Dtype**
-  Valid problem dimension labels are:
-  
-  - **1, 11, 111, 112, 12, 121, 122**
+#### Dtype
+Valid problem dimension labels are:
+  - **1, 11, 111, 112, 12, 121, 122**  
     Generalized plane strain.
-  - **2, 21, 211, 212, 22, 221, 222**
+  - **2, 21, 211, 212, 22, 221, 222**  
     Generalized plane stress.
-  - **3, 31, 311, 312, 32, 321, 322**
+  - **3, 31, 311, 312, 32, 321, 322**  
     Coupled stretching-bending.
-  - **4, 14, 104**
+  - **4, 14, 104**  
     Three-dimensional.
-- **Ltype**<a name="Ltype"></a>
-  Solution label, often corresponds to its section number in the book.
+
+#### Ltype
+Solution label, often corresponds to its section number in the book.
   
-- **Otype**<a name="Otype"></a>
-  Output region label. Used with `input_variable.txt`, see [that section](#input_variable.txt) for more information.
+#### Otype
+Output points label. Used with `input_variable.txt`, see [that section](#input_variabletxt) for more information. Valid labels are:
+- **1, 11, 12, 13**: Curve  
+  Additional output for analytical solutions (**Ltype > 100**):
+  - **11**: $\sigma_{ss}$, hoop stress (hole)
+  - **12**: $\sigma_{ss}, \sigma_{nn}, \sigma_{sn}$, internal surface traction (inclusion/interface?)
+  - **13**: $\sigma_{nn}$, normal stress (contact?)
+- **2**: Area.
+- **3**: Discrete points.
   
-  > No idea why this parameter is here; it should be put in `input_variable.txt`.
-  
-  Valid labels are:
-  
-  - **1, 11, 12, 13**
-    Curve. Additional output for analytical solutions (**Ltype > 100**):
-    - **11**: $\sigma_{ss}$, hoop stress (hole)
-    - **12**: $\sigma_{ss}, \sigma_{nn}, \sigma_{sn}$, internal surface traction (inclusion/interface?)
-    - **13**: $\sigma_{nn}$, normal stress (contact?)
-  - **2**
-    Area.
-  - **3**
-    Discrete points.
-- **Icheck**
+#### Icheck
   Internal check label. If and only if `Icheck=1`, values of **A**, **B**, **mu**, **N1**, **N2**, **N3**, **N** are verified through alternative approach and some identities. In some cases, also verifies the solution.
-  
-- **E0**
+ 
+#### E0
   Reference Young's modulus for the nondimensionalization of **N2**, **N3**, and **N**. Suggested value=<mark>1.0e9</mark>.
   
-- **h0**
+#### h0
   Reference thickness used for the nondimensionalization of Aij,Bij and Dij. Suggested value=<mark>1.0e-3</mark>.
   
-- **eps**
+#### eps
   Perturbation ratio and error tolerance, suggested value=<mark>1.0e-6</mark>.
   
   > The suggested values of E0, h0, and eps are taken from comments in `Main.m`.
   
-- **Etype**<a name="Etype"></a>
-  Used with `input_elastic#.txt`, see [that section](#input_elastic1.txt) for more informations. No idea why it is here; it should be put in `input_elastic#.txt`. Valid elastic property labels:
+#### Etype
+  Used with `input_elastic#.txt`, see [that section](#input_elastic1txt) for more informations. Valid elastic property labels:
   
-  - **0**
+  - **0**  
     No elastic properties.
     
     > Even though it is listed here, it does not mean you have to use it. Think again before doing anything stupid.
     
-  - **1**
+  - **1**  
     Isotropic.
     
-  - **2**
+  - **2**  
     Orthotropic.
     
-  - **3**
+  - **3**  
     Anisotropic, values in `input_elastic#.txt` are Cij.
     
-  - **4**
+  - **4**  
     Anisotropic, values in `input_elastic#.txt` are Sij.
     
-  - **5**
+  - **5**  
     Unidirectional fiber-reinforced composite.
     
-  - **6**
+  - **6**  
     Composite laminate.
     
-- **Ttype**
-  Used with `input_thermal#.txt`, see that section for more information. (Unfortunately, because I have never run any thermal problem with AEPH, "that section" **does not** exist yet. Same for Ptype and Vtype.) Valid thermal property labels:
-  
-  - **0**
+#### Ttype
+Used with `input_thermal#.txt`, see that section for more information. (Unfortunately, because I have never run any thermal problem with AEPH, "that section" **does not** exist yet. Same for Ptype and Vtype.) Valid thermal property labels:
+  - **0**  
     No thermal properties.
-  - **1**
+  - **1**  
     Isotropic.
-  - **2**
+  - **2**  
     Orthotropic.
-  - **3**
+  - **3**  
     Anisotropic, values in `input_thermal#.txt` are kij and betaij.
-  - **4**
+  - **4**  
     Anisotropic, values in `input_thermal#.txt` are kij and alphaij.
-  - **5**
+  - **5**  
     Unidirectional fiber-reinforced composites.
-  - **6**
+  - **6**  
     Composite laminates.
-- **Ptype**
+    
+#### Ptype
   Piezoelectric properties input label. Used with `input_piezo#.txt`, see Ch. 11 of the book for more information. Valid labels are:
-  
-  - **0**
+  - **0**  
     No piezoelectric properties.
   - **1, 2, 3, 4**
-  - **5**
+  - **5**  
     Electro-elastic laminates.
-  - **11, 12, 13, 14, 15, 16, 17, 18, 19** 
+  - **11, 12, 13, 14, 15, 16, 17, 18, 19**  
     Magneto-electro-elastic materials.
-- **Vtype**
+    
+#### Vtype
   Viscoelastic properties input label. Valid labels are:
-  
-  - **0**
+  - **0**  
     No viscoelastic properties.
-  - **1, 2**
+  - **1, 2**  
     Isotropic.
-  - **3**
+  - **3**  
     Standard linear viscoelastic solids.
-  - **4**
+  - **4**  
     Prony series.
 
 ## input_elastic1.txt
@@ -150,7 +143,7 @@ Here goes the elastic properties.
 > Each material has a input file; there are as many `input_elastic#.txt` files as the materials.
 > The number **1** in the file name is its material number (order of appearance in `input_control.txt`).
 
-Its format depends on <mark>[Etype](#Etype)</mark> in `input_control.txt`.
+Its format depends on [Etype](#etype) in `input_control.txt`.
 
 ### Etype=1, Isotropic
 
@@ -252,9 +245,9 @@ Layer 1 is defined by `1 45 0.001`; it is made of material **1** with fiber angl
 
 `input_loadstr.txt` provides the parameters used in the solutions, e.g. value of stress at infinity, location and value of point force, and parameters of elliptical hole/inclusion; therefore, its format varies for each `Ltype`. `loadstr` stands for "load and structure".
 
-> Only those I use frequently are listed here, for a full list, see appendix E.4 of the book.
+> Only those I use frequently are listed here, for a full list, see appendix E.4 of *Anisotropic elastic plate with MATLAB*.
 
-Its format depends on [Ltype](#Ltype) in `input_control.txt`.
+Its format depends on [Ltype](#ltype) in `input_control.txt`.
 
 ### Ltype=4, BEM for elliptical hole
 
@@ -306,7 +299,7 @@ elem GausPts x0 y0 angle a b epsilon k
   x_2=a(c\sin\psi-\epsilon\sin k \psi)\,.
   $$
 
-### Ltype=411, Uniform load <a name="Ltype411"></a>
+### Ltype=411, Uniform load
 
 ```
 loadLabel val1 [val2 val3 ...]
@@ -359,7 +352,7 @@ a b loadLabel val1 [val2 val3 ...]
 
 - **a, b**: semi-major and minor axes of the ellipse
   
-- **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#Ltype411) for loadLabels and their corresponding `val1 val2 ...`.
+- **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
   
 
 ### Ltype=614, Point load, elliptical hole
@@ -387,15 +380,15 @@ a c epsilon k loadLabel val1 [val2 val3 ...]
   x_1=a(\cos\psi+\epsilon\cos k\psi)\,, \qquad
   x_2=a(c\sin\psi-\epsilon\sin k \psi)\,.
   $$
-- **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#Ltype411) for loadLabels and their corresponding `val1 val2 ...`.
+- **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
   
 
 ## input_variable.txt
 
 Despite its mysterious name, `input_variable.txt` defines the points at which the results (e.g. displacement, stress, strain) are calculated and output to `result.txt` and figures.
 
-Its format depends on [Otype](#Otype) in `input_control.txt`.
-This is only a portion of all the available options. Consult the book for the full list.
+Its format depends on [Otype](#otype) in `input_control.txt`.  
+This is only a portion of all the available options. Consult *Anisotropic elastic plate with MATLAB* for the full list.
 
 > The first number in `input_variable.txt` controls the type of curve/surface. For example, this number is `1` for piecewise line segments, and `2` for circular area. Don't forget to include it in this file.
 
@@ -504,8 +497,8 @@ Though it is called `input_node1.txt`, this file defines the **elements** by nod
 > The number **1** in the file name is its region number.
 
 ```
-n1 n2 n3 n4 n5 n6 n7 n8
-n1 n2 n3 n4 n5 n6 n7 n8
+n1 n2 [n3 n4 n5 n6 n7 n8]
+n1 n2 [n3 n4 n5 n6 n7 n8]
 [...]
 ```
 
