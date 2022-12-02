@@ -11,7 +11,6 @@ This input guide is a companion of MATLAB program **AEPH** from *Anisotropic ela
 - [input_elastic.txt](#input_elastic1txt)
 - [input_loadstr.txt](#input_loadstrtxt)
   - [Ltype=4](#ltype4-bem-for-elliptical-hole)
-  - [Ltype=9](#ltype9-bem-for-polygonal-hole)
   - [Ltype=411](#ltype411-uniform-load)
   - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
   - [Ltype=614](#ltype614-point-load-elliptical-hole)
@@ -122,9 +121,9 @@ Used with `input_thermal#.txt`, see that section for more information. (Unfortun
   - **2**  
     Orthotropic.
   - **3**  
-    Anisotropic, values in `input_thermal#.txt` are kij and betaij.
+    Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\beta_{ij}$.
   - **4**  
-    Anisotropic, values in `input_thermal#.txt` are kij and alphaij.
+    Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\alpha_{ij}$.
   - **5**  
     Unidirectional fiber-reinforced composites.
   - **6**  
@@ -285,34 +284,6 @@ elemType GausPts x0 y0 angle a b
 - **angle**: angle from positive x1-axis to the major axis of the ellipse, in degrees.
   
 - **a**, **b**: half major and minor axes of the ellipse.
-  
-
-### Ltype=9, BEM for polygonal hole
-
-```
-elem GausPts x0 y0 angle a b epsilon k
-```
-
-- **elem**: element type. Valid labels are:
-  
-  - **1**: linear element.
-    
-  - **2**: quadratic element.
-    
-  - **3**: linear element with cubic deflection.
-    
-- **GausPts**: number of Gaussain points used for the line integral.
-  
-- **x0**, **y0**: center of ellipse.
-  
-- **angle**: angle from positive x1-axis to the major axis of the ellipse, in degrees.
-  
-- **a, c, epsilon, k**: parameters defining hole contour by
-  
-  $$
-  x_1=a(\cos\psi+\epsilon\cos k\psi)\,, \qquad
-  x_2=a(c\sin\psi-\epsilon\sin k \psi)\,.
-  $$
 
 ### Ltype=411, Uniform load
 
@@ -389,12 +360,8 @@ a b p1 p2 p3 [p4] x1 x2
 a c epsilon k loadLabel val1 [val2 val3 ...]
 ```
 
-- **a, c, epsilon, k**: parameters defining hole contour by
-  
-  $$
-  x_1=a(\cos\psi+\epsilon\cos k\psi)\,, \qquad
-  x_2=a(c\sin\psi-\epsilon\sin k \psi)\,.
-  $$
+- **a, c, epsilon, k**: parameters defining hole contour by  
+    $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi).$
 - **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
   
 
