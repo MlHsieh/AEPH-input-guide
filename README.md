@@ -379,7 +379,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
 - **Piecewise line segments**
   
   ```tex
-  1 nLines x1 y1 x2 y2 nPts [x1 y1 x2 y2 nPts ...]
+  1 nLines x1 y1 x2 y2 nPts [x3 y3 nPts ...]
   ```
   
   - **nLines**: total number of line segments.
