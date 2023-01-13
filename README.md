@@ -1,16 +1,19 @@
 # AEPH Input Guide
 
-This input guide is a companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021. Additional information can be found in Sec. 3.1.4 and App. E in the book.
+This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021, where additional information can be found in § 3.1.4 and App. E.
 
 > All the labels used in AEPH are **numbers**, i.e. all data in the input files must be numeric.
 
 > Parameters enclosed by brackets `[ ]` are optional.
 
 ## Table of Contents
+
 - [input_control.txt](#input_controltxt)
 - [input_elastic.txt](#input_elastic1txt)
+- [input_thermal.txt](#input_thermal1txt)
 - [input_loadstr.txt](#input_loadstrtxt)
   - [Ltype=4](#ltype4-bem-for-elliptical-hole)
+  - [Ltype=7](#ltype7-bem-for-elastic-inclusion)
   - [Ltype=411](#ltype411-uniform-load)
   - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
   - [Ltype=614](#ltype614-point-load-elliptical-hole)
@@ -19,6 +22,7 @@ This input guide is a companion of MATLAB program **AEPH** from *Anisotropic ela
 - [input_xn.txt](#input_xntxt)
 - [input_node1.txt](#input_node1txt)
 - [input_bc.txt](#input_bctxt)
+- [input_temp.txt](#input_temptxt)
 
 ## input_control.txt
 
@@ -46,24 +50,30 @@ E.g.
 ### Parameters
 
 #### Nmat
+
 Total number of materials.
-  
+
 #### Dtype
+
 Valid problem dimension labels are:
-  - **1, 11, 111, 112, 12, 121, 122**  
-    Generalized plane strain.
-  - **2, 21, 211, 212, 22, 221, 222**  
-    Generalized plane stress.
-  - **3, 31, 311, 312, 32, 321, 322**  
-    Coupled stretching-bending.
-  - **4, 14, 104**  
-    Three-dimensional.
+
+- **1, 11, 111, 112, 12, 121, 122**  
+  Generalized plane strain.
+- **2, 21, 211, 212, 22, 221, 222**  
+  Generalized plane stress.
+- **3, 31, 311, 312, 32, 321, 322**  
+  Coupled stretching-bending.
+- **4, 14, 104**  
+  Three-dimensional.
 
 #### Ltype
-Solution label, often corresponds to its section number in the book.
-  
+
+Solution label. **0~99** are boundary element method, and **Ltype > 100** are analytical solutions (section number in Hwu (2021)). A complete list for BEM Ltypes can be found in §15.1.7.
+
 #### Otype
+
 Output points label. Used with `input_variable.txt`, see [that section](#input_variabletxt) for more information. Valid labels are:
+
 - **1, 11, 12, 13**: Curve  
   Additional output for analytical solutions (**Ltype > 100**):
   - **11**: $\sigma_{ss}$, hoop stress (hole)
@@ -71,90 +81,99 @@ Output points label. Used with `input_variable.txt`, see [that section](#input_v
   - **13**: $\sigma_{nn}$, normal stress (contact?)
 - **2**: Area.
 - **3**: Discrete points.
-  
+
 #### Icheck
+
   Internal check label. If and only if `Icheck=1`, values of **A**, **B**, **mu**, **N1**, **N2**, **N3**, **N** are verified through alternative approach and some identities. In some cases, also verifies the solution.
- 
+
 #### E0
+
   Reference Young's modulus for the nondimensionalization of **N2**, **N3**, and **N**. Suggested value=<mark>1.0e9</mark>.
-  
+
 #### h0
+
   Reference thickness used for the nondimensionalization of Aij,Bij and Dij. Suggested value=<mark>1.0e-3</mark>.
-  
+
 #### eps
+
   Perturbation ratio and error tolerance, suggested value=<mark>1.0e-6</mark>.
-  
-  > The suggested values of E0, h0, and eps are taken from comments in `Main.m`.
-  
+
+> The suggested values of E0, h0, and eps are taken from comments in `Main.m`.
+
 #### Etype
+
   Used with `input_elastic#.txt`, see [that section](#input_elastic1txt) for more informations. Valid elastic property labels:
-  
-  - **0**  
-    No elastic properties.
-    
-    > Even though it is listed here, it does not mean you have to use it. Think again before doing anything stupid.
-    
-  - **1**  
-    Isotropic.
-    
-  - **2**  
-    Orthotropic.
-    
-  - **3**  
-    Anisotropic, values in `input_elastic#.txt` are Cij.
-    
-  - **4**  
-    Anisotropic, values in `input_elastic#.txt` are Sij.
-    
-  - **5**  
-    Unidirectional fiber-reinforced composite.
-    
-  - **6**  
-    Composite laminate.
-    
+
+- **0**  
+  No elastic properties from `input_elastic#.txt`. Often used for piezoelectric or magneto-electric-elastic materials.
+
+- **1**  
+  Isotropic.
+
+- **2**  
+  Orthotropic.
+
+- **3**  
+  Anisotropic, values in `input_elastic#.txt` are Cij.
+
+- **4**  
+  Anisotropic, values in `input_elastic#.txt` are Sij.
+
+- **5**  
+  Unidirectional fiber-reinforced composite.
+
+- **6**  
+  Composite laminate.
+
 #### Ttype
-Used with `input_thermal#.txt`, see that section for more information. (Unfortunately, because I have never run any thermal problem with AEPH, "that section" **does not** exist yet. Same for Ptype and Vtype.) Valid thermal property labels:
-  - **0**  
-    No thermal properties.
-  - **1**  
-    Isotropic.
-  - **2**  
-    Orthotropic.
-  - **3**  
-    Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\beta_{ij}$.
-  - **4**  
-    Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\alpha_{ij}$.
-  - **5**  
-    Unidirectional fiber-reinforced composites.
-  - **6**  
-    Composite laminates.
-    
+
+Used with `input_thermal#.txt`, see [that section](#input_thermal1txt) for more information. Valid thermal property labels:
+
+- **0**  
+  No thermal properties.
+- **1**  
+  Isotropic.
+- **2**  
+  Orthotropic.
+- **3**  
+  Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\beta_{ij}$.
+- **4**  
+  Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\alpha_{ij}$.
+- **5**  
+  Unidirectional fiber-reinforced composites.
+- **6**  
+  Composite laminates.
+
 #### Ptype
+
   Piezoelectric properties input label. Used with `input_piezo#.txt`, see Ch. 11 of the book for more information. Valid labels are:
-  - **0**  
-    No piezoelectric properties.
-  - **1, 2, 3, 4**
-  - **5**  
-    Electro-elastic laminates.
-  - **11, 12, 13, 14, 15, 16, 17, 18, 19**  
-    Magneto-electro-elastic materials.
-    
+
+- **0**  
+  No piezoelectric properties.
+- **1, 2, 3, 4**
+- **5**  
+  Electro-elastic laminates.
+- **11, 12, 13, 14, 15, 16, 17, 18, 19**  
+  Magneto-electro-elastic materials.
+
 #### Vtype
+
   Viscoelastic properties input label. Valid labels are:
-  - **0**  
-    No viscoelastic properties.
-  - **1, 2**  
-    Isotropic.
-  - **3**  
-    Standard linear viscoelastic solids.
-  - **4**  
-    Prony series.
+
+- **0**  
+  No viscoelastic properties.
+- **1, 2**  
+  Isotropic.
+- **3**  
+  Standard linear viscoelastic solids.
+- **4**  
+  Prony series.
 
 ## input_elastic1.txt
 
 Here goes the elastic properties.
 
-> Each material has a input file; there are as many `input_elastic#.txt` files as the materials.
+> Each material has an input file; e.g. four materials require four `input_elastic#.txt` files.
 > The number **1** in the file name is its material number (order of appearance in `input_control.txt`).
 
 Its format depends on [Etype](#etype) in `input_control.txt`.
@@ -255,6 +274,64 @@ Layer 1 is defined by `1 45 0.001`; it is made of material **1** with fiber angl
 - **angle**: fiber orientation in degrees, directed counterclockwisely from x1-axis to the principal material direction.
 - **thk**: layer thickness.
 
+## input_thermal1.txt
+
+Thermal conductivities and thermal expansion coefficients. Its format depends on [Ttype](#ttype) in `input_control.txt`. This is only a part of valid formats. Consult §3.1.4 of Hwu (2021) for the full list.
+
+### Ttype=1, Isotropic
+
+```
+k a
+```
+
+- **k**: thermal conductivity.
+
+- **a**: thermal expansion coefficient $\alpha$.
+
+### Ttype=2, Orthotropic
+
+```
+k1 k2 k3 a1 a2 a3
+```
+
+- **k1, k2, k3**: thermal conductivities in x1, x2 and x3 directions.
+
+- **a1, a2, a3**: thermal expansion coefficients $\alpha$ in x1, x2 and x3 directions.
+
+### Ttype=3, Anisotropic
+
+```
+k11 k12 k13
+k12 k22 k23
+k13 k23 k33
+b11 b12 b13
+b12 b22 b23
+b13 b23 b33
+[b14 b24 b34] 
+[b15 b25 b35]
+```
+
+- **kij**: thermal conductivities.
+
+- **bij**: thermal moduli $\beta_{ij}$.
+
+### Ttype=4, Anisotropic
+
+```
+k11 k12 k13
+k12 k22 k23
+k13 k23 k33
+a11 a12 a13
+a12 a22 a23
+a13 a23 a33
+[a14 a24 a34] 
+[a15 a25 a35]
+```
+
+- **kij**: thermal conductivities.
+
+- **aij**: thermal expansion coefficients $\alpha_{ij}$.
+
 ## input_loadstr.txt
 
 `input_loadstr.txt` provides the parameters used in the solutions, e.g. value of stress at infinity, location and value of point force, and parameters of elliptical hole/inclusion; therefore, its format varies for each `Ltype`. `loadstr` stands for "load and structure".
@@ -272,18 +349,42 @@ elemType GausPts x0 y0 angle a b
 - **elemType**: defines the element type. Valid labels are:
   
   - **1**: linear element.
-    
+  
   - **2**: quadratic element.
-    
+  
   - **3**: linear element with cubic deflection.
-    
+
 - **GausPts**: number of Gaussain points used for the line integral.
-  
+
 - **x0**, **y0**: center of ellipse.
-  
+
 - **angle**: angle from positive x1-axis to the major axis of the ellipse, in degrees.
-  
+
 - **a**, **b**: half major and minor axes of the ellipse.
+
+### Ltype=7, BEM for elastic inclusion
+
+```
+elemType GausPts x0 y0 angle a b ns
+```
+
+- **elemType**: defines the element type. Valid labels are:
+  
+  - **1**: linear element.
+  
+  - **2**: quadratic element.
+  
+  - **3**: linear element with cubic deflection.
+
+- **GausPts**: number of Gaussain points used for the line integral.
+
+- **x0**, **y0**: center of ellipse.
+
+- **angle**: angle from positive x1-axis to the major axis of the ellipse, in degrees.
+
+- **a**, **b**: half major and minor axes of the ellipse.
+
+- **ns**: numer of terms for estimating infinite series, suggested value = 20.
 
 ### Ltype=411, Uniform load
 
@@ -301,6 +402,7 @@ Avaliable `loadLabel` and their corresponding `val` are:
   
   - **sigma**: value of unidirectional tension.
   - **angle**: angle of the load, in degrees, counterclockwise from positive x1-axis.
+
 - **Biaxial tension, loadLabel=2**
   
   ```tex
@@ -308,6 +410,7 @@ Avaliable `loadLabel` and their corresponding `val` are:
   ```
   
   - **sigma1, sigma2**: value of tension loads.
+
 - **Inplane shear, loadLabel=3**
   
   ```tex
@@ -315,6 +418,7 @@ Avaliable `loadLabel` and their corresponding `val` are:
   ```
   
   - **sigma**: value of inplane shear load.
+
 - **Antiplane shear, loadLabel=4**
   
   ```tex
@@ -322,6 +426,7 @@ Avaliable `loadLabel` and their corresponding `val` are:
   ```
   
   - **sigma13, sigma23**: value of anti-plane shear load $\tau_{13}$ and $\tau_{23}$.
+
 - **Stress components, loadLabel=5**
   
   ```tex
@@ -337,9 +442,8 @@ a b loadLabel val1 [val2 val3 ...]
 ```
 
 - **a, b**: semi-major and minor axes of the ellipse
-  
+
 - **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
-  
 
 ### Ltype=614, Point load, elliptical hole
 
@@ -348,11 +452,10 @@ a b p1 p2 p3 [p4] x1 x2
 ```
 
 - **a, b**: semi-major and minor axes of the ellipse
-  
+
 - **p1, p2, p3, p4**: components of point force, `p4` for piezoeletric material.
-  
+
 - **x1, x2**: (x1, x2) is the location of the point force.
-  
 
 ### Ltype=622, Uniform load, polygon-like hole
 
@@ -363,7 +466,6 @@ a c epsilon k loadLabel val1 [val2 val3 ...]
 - **a, c, epsilon, k**: parameters defining hole contour by  
     $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi).$
 - **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
-  
 
 ## input_variable.txt
 
@@ -385,6 +487,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   - **nLines**: total number of line segments.
   - **x1, y1, x2, y2**: the line segment starts from (x1, y1) and ends at (x2, y2).
   - **nPts**: total number of points on this line segment, including its end points.
+
 - **Arc**
   
   ```tex
@@ -395,6 +498,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   - **r**: radius.
   - **start_angle, end_angle**: starting and ending angles of the arc, in degrees.
   - **nPts**: total number of points on the arc, end points included.
+
 - **Slanted elliptical curve**
   
   ```tex
@@ -405,6 +509,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   - **a, b**: lengths of half major and minor axes.
   - **start_angle, end_angle**: range of the ellipse parameter $\psi$, in degrees.
   - **slant_angle**: rotation angle of the curve, counterclockwise from positive x1-axis.
+
 - **Slanted polygon-like curve**
   
   ```tex
@@ -412,15 +517,14 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   ```
   
   - **x0, y0**: center of the ellipse
-    
+  
   - **a, c, epsilon, k**: parameters of the curve
     
     $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi).$
-    
+  
   - **psi_0, psi_1**: range of the ellipse parameter $\psi$, in degrees.
-    
+  
   - **slant_angle**: rotation angle of the curve, counterclockwise from positive x1-axis.
-    
 
 ### Otype=2, Area
 
@@ -431,11 +535,11 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   ```
   
   - **x1, y1, x2, y2**: two corners, (x1, y1) and (x2, y2), defining the rectangle.
-    
+  
   - **nXPts, nYPts**: number of points divided in x and y directions; `nXPts*nYPts` points in total.
-    
+  
   - **angle**: slant angle, in degrees, counterclockwise. I guess it rotates the rectangle, defined by x1, y1, x2, and y2, with respect to its center.
-    
+
 - **Circular**
   Disk, ring, or sector.
   
@@ -458,9 +562,8 @@ x y
 ```
 
 - **nPts**: total number of points.
-  
+
 - **x, y**: coordinate of the points.
-  
 
 ## input_xn.txt
 
@@ -485,9 +588,8 @@ n1 n2 [n3 n4 n5 n6 n7 n8]
 ```
 
 - **n1**: index of the first node of the element.
-  
+
 - **n2**, **n3**, **n4**, **n5**, **n6**, **n7**, **n8**: index of the second (n2) to eighth node (n8) of the element, if any.
-  
 
 ## input_bc.txt
 
@@ -500,9 +602,27 @@ label1 label2 label3 [label4 ...] value1 value2 value3 [value4 ...]
 - **label1**, **label2**, **label3**, **...** : type of boundary condition of the 1st to 8th degree of freedom, if any. Valid labels are:
   
   - **0**: traction-prescribed.
-    
+  
   - **1**: displacement-prescribed.
-    
+  
   - **2**: contact.
-    
+
 - **value1**, **value2**, **value3**, **...** : prescribed values of the 1st to 8th degree of freedom, if any.
+
+## input_temp.txt
+
+Temperature $T$ and its derivatives $T_{,1}$ and $T_{,2}$ at each node. Each line contains data of one node in the same order as [input_node1.txt](#inputnode1txt).
+
+> In newer versions, modification for themalelasticity with **multiple regions** (BFEM) is added. Because the temperature gradients are often discontinous across material interfaces, each region needs its own temperature data.
+> 
+> These files should be are named sequencially as `input_temp1.txt`, `input_temp2.txt` , ..., etc. All files should have exact same number of lines. The values can be set as zero for nodes outside the region.
+
+```
+T T1 T2
+[T T1 T2]
+[...]
+```
+
+- **T**: temperature.
+
+- **T1, T2**: temperature gradient $T_{,1}$ and $T_{,2}$.
