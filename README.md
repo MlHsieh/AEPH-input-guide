@@ -540,7 +540,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   
   - **angle**: slant angle, in degrees, counterclockwise. I guess it rotates the rectangle, defined by x1, y1, x2, and y2, with respect to its center.
 
-- **Circular**
+- **Circular**  
   Disk, ring, or sector.
   
   ```tex
@@ -551,6 +551,21 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   - **r1, r2**: inner and outer radii.
   - **theta1, theta2**: starting and ending angle, in degrees.
   - **nRPts, nThPts**: number of points divided in r and theta directions.
+  
+- **Slanted polygon-like area**
+  
+  $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi),\ a_1 \geq a \geq a_2,\ \psi_1 \geq \psi \geq \psi_2.$
+
+  ```tex
+  4 x0 y0 c ep k a1 psi1 a2 psi2 naPts npsiPts angle
+  ```
+  
+  - **x0, y0**: center of the area.
+  - **c, ep, k**: shape parameters.
+  - **a1, a2**: $a_1$, $a_2$, range of $a$.
+  - **psi1, psi2**: $\psi_1$, $\psi_2$, range of $\psi$, in degrees.
+  - **naPts, npsiPts**: number of points divided in $a$ and $\psi$ directions.
+  - **angle**: slant angle, in degrees, counterclockwise.
 
 ### Otype=3, User defined points
 
