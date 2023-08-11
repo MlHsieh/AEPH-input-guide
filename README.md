@@ -630,7 +630,7 @@ Temperature $T$ and its derivatives $T_{,1}$ and $T_{,2}$ at each node. Each lin
 
 > In newer versions, modification for themalelasticity with **multiple regions** (BFEM) is added. Because the temperature gradients are often discontinous across material interfaces, each region needs its own temperature data.
 > 
-> These files should be are named sequencially as `input_temp1.txt`, `input_temp2.txt` , ..., etc. All files should have exact same number of lines. The values can be set as zero for nodes outside the region.
+> These files should be named sequencially as `input_temp1.txt`, `input_temp2.txt` , ..., etc. All files should have exact same number of lines. The values can be set as zero for nodes outside the region.
 
 ```
 T T1 T2
