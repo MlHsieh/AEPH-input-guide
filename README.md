@@ -8,21 +8,21 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
 
 ## Table of Contents
 
-- [input_control.txt](#input_controltxt)
-- [input_elastic.txt](#input_elastic1txt)
-- [input_thermal.txt](#input_thermal1txt)
-- [input_loadstr.txt](#input_loadstrtxt)
+- [input_control.txt](#input_controltxt) (global parameter)
+- [input_elastic.txt](#input_elastic1txt) (elastic property)
+- [input_thermal.txt](#input_thermal1txt) (thermal property)
+- [input_loadstr.txt](#input_loadstrtxt) (problem parameter)
   - [Ltype=4](#ltype4-bem-for-elliptical-hole)
   - [Ltype=7](#ltype7-bem-for-elastic-inclusion)
   - [Ltype=411](#ltype411-uniform-load)
   - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
   - [Ltype=614](#ltype614-point-load-elliptical-hole)
   - [Ltype=622](#ltype622-uniform-load-polygon-like-hole)
-- [input_variable.txt](#input_variabletxt)
-- [input_xn.txt](#input_xntxt)
-- [input_node1.txt](#input_node1txt)
-- [input_bc.txt](#input_bctxt)
-- [input_temp.txt](#input_temptxt)
+- [input_variable.txt](#input_variabletxt) (output parameter)
+- [input_xn.txt](#input_xntxt) (node, BEM)
+- [input_node1.txt](#input_node1txt) (element, BEM)
+- [input_bc.txt](#input_bctxt) (boundary conditions, BEM)
+- [input_temp.txt](#input_temptxt) (thermal boundary conditions, BEM)
 
 ## input_control.txt
 
@@ -57,13 +57,13 @@ Total number of materials.
 
 Valid problem dimension labels are:
 
-- **1, 11, 111, 112, 12, 121, 122**  
+- **1, 11, 111, 112, 12, 121, 122**
   Generalized plane strain.
-- **2, 21, 211, 212, 22, 221, 222**  
+- **2, 21, 211, 212, 22, 221, 222**
   Generalized plane stress.
-- **3, 31, 311, 312, 32, 321, 322**  
+- **3, 31, 311, 312, 32, 321, 322**
   Coupled stretching-bending.
-- **4, 14, 104**  
+- **4, 14, 104**
   Three-dimensional.
 
 #### Ltype
@@ -74,7 +74,7 @@ Solution label. **0~99** are boundary element method, and **Ltype > 100** are an
 
 Output points label. Used with `input_variable.txt`, see [that section](#input_variabletxt) for more information. Valid labels are:
 
-- **1, 11, 12, 13**: Curve  
+- **1, 11, 12, 13**: Curve.  
   Additional output for analytical solutions (**Ltype > 100**):
   - **11**: $\sigma_{ss}$, hoop stress (hole)
   - **12**: $\sigma_{ss}, \sigma_{nn}, \sigma_{sn}$, internal surface traction (inclusion/interface?)
@@ -104,69 +104,69 @@ Output points label. Used with `input_variable.txt`, see [that section](#input_v
 
   Used with `input_elastic#.txt`, see [that section](#input_elastic1txt) for more informations. Valid elastic property labels:
 
-- **0**  
+- **0**
   No elastic properties from `input_elastic#.txt`. Often used for piezoelectric or magneto-electric-elastic materials.
 
-- **1**  
+- **1**
   Isotropic.
 
-- **2**  
+- **2**
   Orthotropic.
 
-- **3**  
+- **3**
   Anisotropic, values in `input_elastic#.txt` are Cij.
 
-- **4**  
+- **4**
   Anisotropic, values in `input_elastic#.txt` are Sij.
 
-- **5**  
+- **5**
   Unidirectional fiber-reinforced composite.
 
-- **6**  
+- **6**
   Composite laminate.
 
 #### Ttype
 
 Used with `input_thermal#.txt`, see [that section](#input_thermal1txt) for more information. Valid thermal property labels:
 
-- **0**  
+- **0**
   No thermal properties.
-- **1**  
+- **1**
   Isotropic.
-- **2**  
+- **2**
   Orthotropic.
-- **3**  
+- **3**
   Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\beta_{ij}$.
-- **4**  
+- **4**
   Anisotropic, values in `input_thermal#.txt` are $k_{ij}$ and $\alpha_{ij}$.
-- **5**  
+- **5**
   Unidirectional fiber-reinforced composites.
-- **6**  
+- **6**
   Composite laminates.
 
 #### Ptype
 
   Piezoelectric properties input label. Used with `input_piezo#.txt`, see Ch. 11 of the book for more information. Valid labels are:
 
-- **0**  
+- **0**
   No piezoelectric properties.
 - **1, 2, 3, 4**
-- **5**  
+- **5**
   Electro-elastic laminates.
-- **11, 12, 13, 14, 15, 16, 17, 18, 19**  
+- **11, 12, 13, 14, 15, 16, 17, 18, 19**
   Magneto-electro-elastic materials.
 
 #### Vtype
 
   Viscoelastic properties input label. Valid labels are:
 
-- **0**  
+- **0**
   No viscoelastic properties.
-- **1, 2**  
+- **1, 2**
   Isotropic.
-- **3**  
+- **3**
   Standard linear viscoelastic solids.
-- **4**  
+- **4**
   Prony series.
 
 ## input_elastic1.txt
@@ -237,7 +237,7 @@ E1 E2 G12 v12 angle
 
 ### Etype=6, Composite laminates
 
-The first line defines the number of layers and materials, followed by elastic properties of each material, and the rest are layer arrangements. The first layer has the smallest `z`. The reference plane is the mid-plane.
+The first line defines the number of layers and materials, followed by elastic properties of each material, and the rest are layer arrangements. The first layer has the smallest $z$. The reference plane is the mid-plane.
 
 ```tex
 nLayer nMat
@@ -263,7 +263,7 @@ E.g.
 
 In this example, there are 4 layers and 2 materials.
 Material 1 is defined by `138e9 9e9 6.9e9 0.3`, and material 2 by `9e9 9e9 6e9 0.25`.
-Layer 1 is defined by `1 45 0.001`; it is made of material **1** with fiber angle **45°** and thickness **0.001**, and the range of its `z` coordinate is [-0.002, -0.001].
+Layer 1 is defined by `1 45 0.001`; it is made of material **1** with fiber angle **45°** and thickness **0.001**, and the range of its $z$ coordinate is [-0.002, -0.001].
 
 - **nLayer**: total number of layers.
 - **nMat**: total number of materials.
@@ -307,7 +307,7 @@ k13 k23 k33
 b11 b12 b13
 b12 b22 b23
 b13 b23 b33
-[b14 b24 b34] 
+[b14 b24 b34]
 [b15 b25 b35]
 ```
 
@@ -324,7 +324,7 @@ k13 k23 k33
 a11 a12 a13
 a12 a22 a23
 a13 a23 a33
-[a14 a24 a34] 
+[a14 a24 a34]
 [a15 a25 a35]
 ```
 
@@ -463,7 +463,7 @@ a b p1 p2 p3 [p4] x1 x2
 a c epsilon k loadLabel val1 [val2 val3 ...]
 ```
 
-- **a, c, epsilon, k**: parameters defining hole contour by  
+- **a, c, epsilon, k**: parameters defining hole contour by
     $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi).$
 - **loadLabel**: valid labels are: **1, 2, 3, 4, 5**. See [Ltype 411](#ltype411-uniform-load) for loadLabels and their corresponding `val1 val2 ...`.
 
@@ -471,7 +471,7 @@ a c epsilon k loadLabel val1 [val2 val3 ...]
 
 Despite its mysterious name, `input_variable.txt` defines the points at which the results (e.g. displacement, stress, strain) are calculated and output to `result.txt` and figures.
 
-Its format depends on [Otype](#otype) in `input_control.txt`.  
+Its format depends on [Otype](#otype) in `input_control.txt`.
 This is only a portion of all the available options. Consult *Anisotropic elastic plate with MATLAB* for the full list.
 
 > The first number in `input_variable.txt` controls the type of curve/surface. For example, this number is `1` for piecewise line segments, and `2` for circular area. Don't forget to include it in this file.
@@ -540,7 +540,7 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   
   - **angle**: slant angle, in degrees, counterclockwise. I guess it rotates the rectangle, defined by x1, y1, x2, and y2, with respect to its center.
 
-- **Circular**  
+- **Circular**
   Disk, ring, or sector.
   
   ```tex
@@ -551,11 +551,11 @@ This is only a portion of all the available options. Consult *Anisotropic elasti
   - **r1, r2**: inner and outer radii.
   - **theta1, theta2**: starting and ending angle, in degrees.
   - **nRPts, nThPts**: number of points divided in r and theta directions.
-  
+
 - **Slanted polygon-like area**
   
   $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi),\ a_1 \geq a \geq a_2,\ \psi_1 \geq \psi \geq \psi_2.$
-
+  
   ```tex
   4 x0 y0 c ep k a1 psi1 a2 psi2 naPts npsiPts angle
   ```
@@ -626,7 +626,7 @@ label1 label2 label3 [label4 ...] value1 value2 value3 [value4 ...]
 
 ## input_temp.txt
 
-Temperature $T$ and its derivatives $T_{,1}$ and $T_{,2}$ at each node. Each line contains data of one node in the same order as [input_node1.txt](#inputnode1txt).
+Temperature $T$ and its derivatives $T_{,1}$ and $T_{,2}$ at each node. Each line contains data of one node in the same order as [input_node1.txt](#input_node1txt).
 
 > In newer versions, modification for themalelasticity with **multiple regions** (BFEM) is added. Because the temperature gradients are often discontinous across material interfaces, each region needs its own temperature data.
 > 
