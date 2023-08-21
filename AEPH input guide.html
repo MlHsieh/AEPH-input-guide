@@ -2921,7 +2921,7 @@ n1 n2 [n3 n4 n5 n6 n7 n8]
 </li>
 </ul>
 <h2 class="atx" id="input_temptxt">input_temp.txt</h2>
-<p>Temperature <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.6833em;" class="strut"></span><span style="margin-right:0.13889em;" class="mord mathnormal">T</span></span></span></span> and its derivatives <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.9694em;vertical-align:-0.2861em;" class="strut"></span><span class="mord"><span style="margin-right:0.13889em;" class="mord mathnormal">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span style="height:0.3011em;" class="vlist"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span style="height:2.7em;" class="pstrut"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span style="height:0.2861em;" class="vlist"><span></span></span></span></span></span></span></span></span></span> and <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.9694em;vertical-align:-0.2861em;" class="strut"></span><span class="mord"><span style="margin-right:0.13889em;" class="mord mathnormal">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span style="height:0.3011em;" class="vlist"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span style="height:2.7em;" class="pstrut"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span style="height:0.2861em;" class="vlist"><span></span></span></span></span></span></span></span></span></span> at each node. Each line contains data of one node in the same order as <a href="#inputnode1txt">input_node1.txt</a>.</p>
+<p>Temperature <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.6833em;" class="strut"></span><span style="margin-right:0.13889em;" class="mord mathnormal">T</span></span></span></span> and its derivatives <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.9694em;vertical-align:-0.2861em;" class="strut"></span><span class="mord"><span style="margin-right:0.13889em;" class="mord mathnormal">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span style="height:0.3011em;" class="vlist"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span style="height:2.7em;" class="pstrut"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span style="height:0.2861em;" class="vlist"><span></span></span></span></span></span></span></span></span></span> and <span class="katex"><span class="katex-mathml"></span><span aria-hidden="true" class="katex-html"><span class="base"><span style="height:0.9694em;vertical-align:-0.2861em;" class="strut"></span><span class="mord"><span style="margin-right:0.13889em;" class="mord mathnormal">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span style="height:0.3011em;" class="vlist"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span style="height:2.7em;" class="pstrut"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span style="height:0.2861em;" class="vlist"><span></span></span></span></span></span></span></span></span></span> at each node. Each line contains data of one node in the same order as <a href="#input_node1txt">input_node1.txt</a>.</p>
 <blockquote>
 <p>In newer versions, modification for themalelasticity with <strong>multiple regions</strong> (BFEM) is added. Because the temperature gradients are often discontinous across material interfaces, each region needs its own temperature data.</p>
 <p>These files should be named sequencially as <code>input_temp1.txt</code>, <code>input_temp2.txt</code> , ..., etc. All files should have exact same number of lines. The values can be set as zero for nodes outside the region.</p>
@@ -2936,5 +2936,17 @@ n1 n2 [n3 n4 n5 n6 n7 n8]
 </li>
 </ul>
 </article>
+  <script>
+  // Smooth scroll for all anchor links.
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+  });
+  </script>
 </body>
 </html>
