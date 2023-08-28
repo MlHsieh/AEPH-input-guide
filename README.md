@@ -21,8 +21,8 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
 - [input_variable.txt](#input_variabletxt) (output parameter)
 - [input_xn.txt](#input_xntxt) (node, BEM)
 - [input_node1.txt](#input_node1txt) (element, BEM)
-- [input_bc.txt](#input_bctxt) (boundary conditions, BEM)
-- [input_temp.txt](#input_temptxt) (thermal boundary conditions, BEM)
+- [input_bc.txt](#input_bctxt) (boundary condition, BEM)
+- [input_temp.txt](#input_temptxt) (thermal boundary condition, BEM)
 
 ## input_control.txt
 
