@@ -1,6 +1,6 @@
 # AEPH Input Guide
 
-This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021, where additional information can be found in § 3.1.4 and App. E.
+This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021, where additional information can be found in § 3.1.4, §15.1.7 (for BEM) and App. E.
 
 > All the labels used in AEPH are **numbers**, i.e. all data in the input files must be numeric.
 
@@ -12,6 +12,7 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
 - [input_elastic.txt](#input_elastic1txt) (elastic property)
 - [input_thermal.txt](#input_thermal1txt) (thermal property)
 - [input_loadstr.txt](#input_loadstrtxt) (problem parameter)
+  - [Ltype=1](#ltype1-bem-for-general-purpose)
   - [Ltype=4](#ltype4-bem-for-elliptical-hole)
   - [Ltype=7](#ltype7-bem-for-elastic-inclusion)
   - [Ltype=411](#ltype411-uniform-load)
@@ -339,6 +340,22 @@ a13 a23 a33
 > Only those I use frequently are listed here, for a full list, see appendix E.4 of *Anisotropic elastic plate with MATLAB*.
 
 Its format depends on [Ltype](#ltype) in `input_control.txt`.
+
+### Ltype=1, BEM for general purpose
+
+```
+elemType GausPts
+```
+
+- **elemType**: defines the element type. Valid labels are:
+  
+  - **1**: linear element.
+  
+  - **2**: quadratic element.
+  
+  - **3**: linear element with cubic deflection.
+
+- **GausPts**: number of Gaussain points used for the line integral.
 
 ### Ltype=4, BEM for elliptical hole
 
