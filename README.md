@@ -344,7 +344,7 @@ Its format depends on [Ltype](#ltype) in `input_control.txt`.
 ### Ltype=1, BEM for general purpose
 
 ```
-elemType GausPts
+elemType GausPts x0 y0 angle
 ```
 
 - **elemType**: defines the element type. Valid labels are:
@@ -356,6 +356,10 @@ elemType GausPts
   - **3**: linear element with cubic deflection.
 
 - **GausPts**: number of Gaussain points used for the line integral.
+
+- **x0**, **y0**: no use, but required.
+
+- **angle**: no use, but required.
 
 ### Ltype=4, BEM for elliptical hole
 
