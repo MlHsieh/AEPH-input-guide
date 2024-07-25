@@ -12,9 +12,11 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
 - [input_elastic.txt](#input_elastic1txt) (elastic property)
 - [input_thermal.txt](#input_thermal1txt) (thermal property)
 - [input_loadstr.txt](#input_loadstrtxt) (problem parameter)
+  - [Ltype format for boundary element methods](#ltype-format-for-boundary-element-methods)
   - [Ltype=1](#ltype1-bem-for-general-purpose)
   - [Ltype=4](#ltype4-bem-for-elliptical-hole)
   - [Ltype=7](#ltype7-bem-for-elastic-inclusion)
+  - [Ltype=8](#ltype8-bfem)
   - [Ltype=411](#ltype411-uniform-load)
   - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
   - [Ltype=614](#ltype614-point-load-elliptical-hole)
@@ -341,6 +343,39 @@ a13 a23 a33
 
 Its format depends on [Ltype](#ltype) in `input_control.txt`.
 
+### Ltype format for boundary element methods
+
+For BEM, Ltype consists of two parts: prefix (P) and fundamental solution (F).
+
+```
+Ltype = P + F.
+```
+
+For example, if `P=3` and `F=6`, then `Ltype=36`. The prefix is optional; if there is no prefix and `F=6`, then `Ltype=6`.
+
+| P      | Problem description                                                                                                                                                                     |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| (None) | 2D static elastic                                                                                                                                                                       |
+| 1      | Piezoeletric or Magneto-electro-elastic                                                                                                                                                 |
+| 2      | Viscoelastic                                                                                                                                                                            |
+| 3      | Thermalelastic                                                                                                                                                                          |
+| 4      | Dynamic                                                                                                                                                                                 |
+| 5      | Coupled-stretch bending (unavaliable for `F=2,3,8`)                                                                                                                                     |
+| 6      | 2D contact<br/>`F=1~7`: Half plane indented by rigid punches.<br/>`F=8`: Contact of two elastic bodies, also avaliable for viscoelastic materials by setting `Vtype` as non-zero value. |
+| 7      | 3D ( only for `F=1`)                                                                                                                                                                    |
+
+| F   | Fundamental solution                                |
+| --- | --------------------------------------------------- |
+| 1   | Infinite plane                                      |
+| 2   | Semi-infinite plane                                 |
+| 3   | Bimaterial plane                                    |
+| 4   | Infinite plane with an elliptical hole              |
+| 5   | Infinite plane with a straight crack                |
+| 6   | Infinite plane with an elliptical rigid inclusion   |
+| 7   | Infinite plane with an elliptical elastic inclusion |
+| 8   | Multi-region                                        |
+
+
 ### Ltype=1, BEM for general purpose
 
 ```
@@ -406,6 +441,28 @@ elemType GausPts x0 y0 angle a b ns
 - **a**, **b**: half major and minor axes of the ellipse.
 
 - **ns**: numer of terms for estimating infinite series, suggested value = 20.
+
+### Ltype=8, BFEM
+
+```
+nSub Ltype1 Ltype2 [Ltype3 ...]
+loadstr1 mat1 [mat2]
+loadstr2 mat1 [mat2]
+[loadstr3 mat1 [mat2]]
+[...]
+```
+
+- **nSub**: number of subregions
+
+- **Ltype1**, **Ltype2**, **Ltype3**, ... : Ltype of each subregion.
+
+- **loadstr1**, **loadstr2**, **loadstr3**, ... : input for each subregion, format depends on the corresponding Ltype. E.g. if `Ltype1=4`, then `loadstr1` should be
+
+  ```
+  elemType GausPts x0 y0 angle a b
+  ```
+
+- **mat1**, **mat2**: the material for this subregion, `mat2` is only required for bimaterial and inclusion. `mat1=1` refers to the first material defined in `input_control.txt`.
 
 ### Ltype=411, Uniform load
 
