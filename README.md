@@ -550,9 +550,32 @@ a c epsilon k loadLabel val1 [val2 val3 ...]
 Despite its mysterious name, `input_variable.txt` defines the points at which the results (e.g. displacement, stress, strain) are calculated and output to `result.txt` and figures.
 
 Its format depends on [Otype](#otype) in `input_control.txt`.
-This is only a portion of all the available options. Consult *Anisotropic elastic plate with MATLAB* for the full list.
+This is only a portion of all the available options. Consult *Hwu, 2021* for the full list.
 
-> The first number in `input_variable.txt` controls the type of curve/surface. For example, this number is `1` for piecewise line segments, and `2` for circular area. Don't forget to include it in this file.
+> For `Otype=1,2`, the first number in `input_variable.txt` controls the type of curve/surface. For example, if `Otype=1`, this number is `1` for piecewise line segments, and `2` for arc. Don't forget to include it in this file.
+
+> For multi-region problems (BFEM), `Otype` must be the same for each subregion. Inputs for all subregions are concatenated vertically in `input_variable.txt`.
+
+Example 1 (Otype=1)
+
+For subregion #1:
+
+```
+2 1 0 0 1 1 10 3 2 10
+```
+
+For subregion #2:
+
+```
+2 0 0 5 0 360 180
+```
+
+"input_variable.txt":
+
+```
+2 1 0 0 1 1 10 3 2 10
+2 0 0 5 0 360 180
+```
 
 ### Otype=1, 11, 12, 13, Curve
 
