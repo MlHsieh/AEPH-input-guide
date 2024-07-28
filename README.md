@@ -1,6 +1,6 @@
 # AEPH Input Guide
 
-This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021, where additional information can be found in § 3.1.4, §15.1.7 (for BEM) and App. E.
+This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *Anisotropic elasticity with Matlab*, Chyanbin Hwu, Springer, 2021, where additional information can be found in § 3.1.4, §15.1.7 (for BEM) and Appendix E.
 
 > All the labels used in AEPH are **numbers**, i.e. all data in the input files must be numeric.
 
@@ -75,7 +75,7 @@ Solution label. **0~99** are boundary element method, and **Ltype > 100** are an
 
 #### Otype
 
-Output points label. Used with `input_variable.txt`, see [that section](#input_variabletxt) for more information. Valid labels are:
+Output scope label. Used with `input_variable.txt`, see [that section](#input_variabletxt) for more information. Valid labels are:
 
 - **1, 11, 12, 13**: Curve.  
   Additional output for analytical solutions (**Ltype > 100**):
@@ -87,7 +87,7 @@ Output points label. Used with `input_variable.txt`, see [that section](#input_v
 
 #### Icheck
 
-  Internal check label. If and only if `Icheck=1`, values of **A**, **B**, **mu**, **N1**, **N2**, **N3**, **N** are verified through alternative approach and some identities. In some cases, also verifies the solution.
+  Enable/disable internal check. If and only if `Icheck=1`, values of **A**, **B**, **mu**, **N1**, **N2**, **N3**, **N** are verified through alternative approach and some identities. In some cases, also verifies the solution. No matter the checks are passed or not, the results will be displayed in the command window.
 
 #### E0
 
@@ -149,7 +149,7 @@ Used with `input_thermal#.txt`, see [that section](#input_thermal1txt) for more 
 
 #### Ptype
 
-  Piezoelectric properties input label. Used with `input_piezo#.txt`, see Ch. 11 of the book for more information. Valid labels are:
+  Piezoelectric properties input label. Used with `input_piezo#.txt`, see Ch. 11 of Hwu (2021) for more information. Valid labels are:
 
 - **0**
   No piezoelectric properties.
@@ -273,7 +273,7 @@ Layer 1 is defined by `1 45 0.001`; it is made of material **1** with fiber angl
 - **E1, E2**: Young's moduli.
 - **G12**: shear modulus.
 - **v12**: Poisson's ratio.
-- **mat**: material number of this layer. e.g. `mat=1` is the 1st material defined in this file.
+- **mat**: material number of this layer. E.g. `mat=1` is the 1st material defined in this file.
 - **angle**: fiber orientation in degrees, directed counterclockwisely from x1-axis to the principal material direction.
 - **thk**: layer thickness.
 
@@ -337,9 +337,9 @@ a13 a23 a33
 
 ## input_loadstr.txt
 
-`input_loadstr.txt` provides the parameters used in the solutions, e.g. value of stress at infinity, location and value of point force, and parameters of elliptical hole/inclusion; therefore, its format varies for each `Ltype`. `loadstr` stands for "load and structure".
+`input_loadstr.txt` provides the parameters used in the solutions, e.g., value of stress at infinity, location and value of point force, and parameters of elliptical hole/inclusion; therefore, its format varies for each `Ltype`. `loadstr` stands for "load and structure".
 
-> Only those I use frequently are listed here, for a full list, see appendix E.4 of *Anisotropic elastic plate with MATLAB*.
+> Only those I use frequently are listed here, for a full list, see Appendix E.4 of Hwu (2021).
 
 Its format depends on [Ltype](#ltype) in `input_control.txt`.
 
@@ -374,7 +374,6 @@ For example, if `P=3` and `F=6`, then `Ltype=36`. The prefix is optional; if the
 | 6   | Infinite plane with an elliptical rigid inclusion   |
 | 7   | Infinite plane with an elliptical elastic inclusion |
 | 8   | Multi-region                                        |
-
 
 ### Ltype=1, BEM for general purpose
 
@@ -550,7 +549,7 @@ a c epsilon k loadLabel val1 [val2 val3 ...]
 Despite its mysterious name, `input_variable.txt` defines the points at which the results (e.g. displacement, stress, strain) are calculated and output to `result.txt` and figures.
 
 Its format depends on [Otype](#otype) in `input_control.txt`.
-This is only a portion of all the available options. Consult *Hwu, 2021* for the full list.
+This is only a portion of all the available options. Consult Hwu (2021) for the full list.
 
 > For `Otype=1,2`, the first number in `input_variable.txt` controls the type of curve/surface. For example, if `Otype=1`, this number is `1` for piecewise line segments, and `2` for arc. Don't forget to include it in this file.
 
@@ -565,7 +564,7 @@ Output setting for subregion #1:
 1 2 0 0 1 1 10 3 2 10
 ```
 
-Output setting subregion #2:
+Output setting for subregion #2:
 
 ```
 2 0 0 5 0 360 180
