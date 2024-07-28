@@ -554,17 +554,18 @@ This is only a portion of all the available options. Consult *Hwu, 2021* for the
 
 > For `Otype=1,2`, the first number in `input_variable.txt` controls the type of curve/surface. For example, if `Otype=1`, this number is `1` for piecewise line segments, and `2` for arc. Don't forget to include it in this file.
 
-> For multi-region problems (BFEM), `Otype` must be the same for each subregion. Inputs for all subregions are concatenated vertically in `input_variable.txt`.
+### Multi-region problems (BFEM)
+For multi-region problems (BFEM), `Otype` must be the same for each subregion. Output settings for all subregions are concatenated vertically in `input_variable.txt`.
 
-Example 1 (Otype=1)
+**Example** (Otype=1)
 
-For subregion #1:
+Output setting for subregion #1:
 
 ```
-2 1 0 0 1 1 10 3 2 10
+1 2 0 0 1 1 10 3 2 10
 ```
 
-For subregion #2:
+Output setting subregion #2:
 
 ```
 2 0 0 5 0 360 180
@@ -573,7 +574,7 @@ For subregion #2:
 "input_variable.txt":
 
 ```
-2 1 0 0 1 1 10 3 2 10
+1 2 0 0 1 1 10 3 2 10
 2 0 0 5 0 360 180
 ```
 
