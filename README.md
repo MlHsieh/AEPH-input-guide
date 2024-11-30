@@ -17,10 +17,10 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
   - [Ltype=4](#ltype4-bem-for-elliptical-hole): BEM for elliptical hole
   - [Ltype=7](#ltype7-bem-for-elastic-inclusion): BEM for elastic elliptical inclusion
   - [Ltype=8](#ltype8-bfem): BFEM for multi-region problem
-  - [Ltype=411](#ltype411-uniform-load): infinite plane, uniform loading
-  - [Ltype=611](#ltype611-uniform-load-elliptical-hole): infinite plane with an elliptical hole, uniform loading
-  - [Ltype=614](#ltype614-point-load-elliptical-hole): infinite plane with an elliptical hole, point load
-  - [Ltype=622](#ltype622-uniform-load-polygon-like-hole): infinite plane with an polygon-like hole, uniform loading
+  - [Ltype=411](#ltype411-uniform-load): infinite plane, uniform stress
+  - [Ltype=611](#ltype611-uniform-load-elliptical-hole): infinite plane with an elliptical hole, uniform stress
+  - [Ltype=614](#ltype614-point-load-elliptical-hole): infinite plane with an elliptical hole, concentrated force
+  - [Ltype=622](#ltype622-uniform-load-polygon-like-hole): infinite plane with an polygon-like hole, uniform stress
 - [input_variable.txt](#input_variabletxt) (output parameter)
   - [Curve](#otype1-11-12-13-curve) (Otype=1)
   - [Area](#otype2-area) (Otype=2)
