@@ -12,16 +12,19 @@ This input guide is a (nonofficial) companion of MATLAB program **AEPH** from *A
 - [input_elastic.txt](#input_elastic1txt) (elastic property)
 - [input_thermal.txt](#input_thermal1txt) (thermal property)
 - [input_loadstr.txt](#input_loadstrtxt) (problem parameter)
-  - [Ltype format for boundary element methods](#ltype-format-for-boundary-element-methods)
-  - [Ltype=1](#ltype1-bem-for-general-purpose)
-  - [Ltype=4](#ltype4-bem-for-elliptical-hole)
-  - [Ltype=7](#ltype7-bem-for-elastic-inclusion)
-  - [Ltype=8](#ltype8-bfem)
-  - [Ltype=411](#ltype411-uniform-load)
-  - [Ltype=611](#ltype611-uniform-load-elliptical-hole)
-  - [Ltype=614](#ltype614-point-load-elliptical-hole)
-  - [Ltype=622](#ltype622-uniform-load-polygon-like-hole)
+  - [Ltype format for boundary element methods (BEM)](#ltype-format-for-boundary-element-methods)
+  - [Ltype=1](#ltype1-bem-for-general-purpose): BEM for general purpose
+  - [Ltype=4](#ltype4-bem-for-elliptical-hole): BEM for elliptical hole
+  - [Ltype=7](#ltype7-bem-for-elastic-inclusion): BEM for elastic elliptical inclusion
+  - [Ltype=8](#ltype8-bfem): BFEM for multi-region problem
+  - [Ltype=411](#ltype411-uniform-load): infinite plane, uniform loading
+  - [Ltype=611](#ltype611-uniform-load-elliptical-hole): infinite plane with an elliptical hole, uniform loading
+  - [Ltype=614](#ltype614-point-load-elliptical-hole): infinite plane with an elliptical hole, point load
+  - [Ltype=622](#ltype622-uniform-load-polygon-like-hole): infinite plane with an polygon-like hole, uniform loading
 - [input_variable.txt](#input_variabletxt) (output parameter)
+  - [Curve](#otype1-11-12-13-curve) (Otype=1)
+  - [Area](#otype2-area) (Otype=2)
+  - [User defined points](#otype3-user-defined-points) (Otype=3)
 - [input_xn.txt](#input_xntxt) (node, BEM)
 - [input_node1.txt](#input_node1txt) (element, BEM)
 - [input_bc.txt](#input_bctxt) (boundary condition, BEM)
@@ -553,30 +556,6 @@ This is only a portion of all the available options. Consult Hwu (2021) for the 
 
 > For `Otype=1,2`, the first number in `input_variable.txt` controls the type of curve/surface. For example, if `Otype=1`, this number is `1` for piecewise line segments, and `2` for arc. Don't forget to include it in this file.
 
-### Multi-region problems (BFEM)
-For multi-region problems (BFEM), `Otype` must be the same for each subregion. Output settings for all subregions are concatenated vertically in `input_variable.txt`.
-
-**Example** (Otype=1)
-
-Output setting for subregion #1:
-
-```
-1 2 0 0 1 1 10 3 2 10
-```
-
-Output setting for subregion #2:
-
-```
-2 0 0 5 0 360 180
-```
-
-"input_variable.txt":
-
-```
-1 2 0 0 1 1 10 3 2 10
-2 0 0 5 0 360 180
-```
-
 ### Otype=1, 11, 12, 13, Curve
 
 - **Piecewise line segments**
@@ -609,6 +588,7 @@ Output setting for subregion #2:
   - **x0, y0**: center of the ellipse
   - **a, b**: lengths of half major and minor axes.
   - **start_angle, end_angle**: range of the ellipse parameter $\psi$, in degrees.
+  - **nPts**: total number of points on the arc, end points included.
   - **slant_angle**: rotation angle of the curve, counterclockwise from positive x1-axis.
 
 - **Slanted polygon-like curve**
@@ -624,7 +604,7 @@ Output setting for subregion #2:
     $x_1 = a(\cos\psi+\epsilon\cos k\psi),\ x_2=a(c\sin\psi-\epsilon\sin k\psi).$
   
   - **psi_0, psi_1**: range of the ellipse parameter $\psi$, in degrees.
-  
+  - **nPts**: total number of points on the arc, end points included.
   - **slant_angle**: rotation angle of the curve, counterclockwise from positive x1-axis.
 
 ### Otype=2, Area
@@ -678,8 +658,31 @@ x y
 ```
 
 - **nPts**: total number of points.
-
 - **x, y**: coordinate of the points.
+
+### Multi-region problems (BFEM)
+For multi-region problems (BFEM), `Otype` must be the same for each subregion. Output settings for all subregions are concatenated vertically in `input_variable.txt`.
+
+**Example** (Otype=1)
+
+Output setting for subregion #1:
+
+```
+1 2 0 0 1 1 10 3 2 10
+```
+
+Output setting for subregion #2:
+
+```
+2 0 0 5 0 360 180
+```
+
+"input_variable.txt":
+
+```
+1 2 0 0 1 1 10 3 2 10
+2 0 0 5 0 360 180
+```
 
 ## input_xn.txt
 
@@ -704,7 +707,6 @@ n1 n2 [n3 n4 n5 n6 n7 n8]
 ```
 
 - **n1**: index of the first node of the element.
-
 - **n2**, **n3**, **n4**, **n5**, **n6**, **n7**, **n8**: index of the second (n2) to eighth node (n8) of the element, if any.
 
 ## input_bc.txt
